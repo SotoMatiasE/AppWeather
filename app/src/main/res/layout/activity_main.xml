@@ -20,7 +20,8 @@
             android:id="@+id/tvTimeZone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Time Zone"
+            android:text="@{viewModel.result.timZone}"
+            tools:text="TimeZone"
             android:textAppearance="?attr/textAppearanceHeadline4"
             android:textColor="?attr/colorSecondaryVariant"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
             android:id="@+id/tvCurrentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Current Weather:"
+            android:text="Current Weather:"
             android:textAppearance="?attr/textAppearanceHeadline5"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textColor="?attr/colorSecondary"
+                android:text="@{String.valueOf(viewModel.result.current.temp)}"
                 tools:text="234.2°"
                 android:gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody1"
+                android:text="@{String.valueOf(viewModel.result.current.dt)}"
                 tools:text="22:00"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -71,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceOverline"
+                android:text="@{String.valueOf(viewModel.result.current.humidity)}"
                 tools:text="Humidity: 65%"
                 app:layout_constraintStart_toStartOf="@id/tvDt"
                 app:layout_constraintTop_toBottomOf="@id/tvDt"/>
@@ -80,6 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody1"
+
                 tools:text="Clouds"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -89,6 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceCaption"
+                android:text="@{viewModel.result.current.weather[0].description}"
                 tools:text="Few clouds"
                 app:layout_constraintEnd_toEndOf="@id/tvMain"
                 app:layout_constraintTop_toBottomOf="@id/tvMain"/>

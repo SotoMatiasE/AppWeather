@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
     fun getSnackbarMessage() = snackbarMessage
 
     private val loaded = MutableLiveData<Boolean>()
-    fun isLoader() = loaded
+    fun isLoaded() = loaded
 
     suspend fun getWeatherAndForecast(lat: Double,
                                       long: Double,
@@ -31,14 +31,14 @@ class MainViewModel : ViewModel() {
                                       units: String,
                                       lang: String){
         viewModelScope.launch {
-            loaded.value = false //config del progres bar visible
             try {
+                loaded.value = false //config del progres bar visible
                 val resultServer =
                     repository.getWeatherAndForecast(lat, long, appId, units, lang)
 
                 result.value = resultServer
             } catch (e: Exception) {
-                snackbarMessage.value =  R.string.main_error_server
+                snackbarMessage.value = R.string.main_error_server
             } finally {
                 //independientemente si fue exito o error hacer invisible PROGRES BAR
                 loaded.value = true
