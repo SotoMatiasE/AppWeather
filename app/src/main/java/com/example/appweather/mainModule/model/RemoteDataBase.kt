@@ -16,14 +16,13 @@ class RemoteDataBase {
         .build()
 
     private val service = retrofit.create(WeatherService::class.java)
-
     suspend fun getWeatherForecastByCoordinates(
         lat: Double,
-        long: Double,
+        lon: Double,
         appId: String,
         units: String,              ///DISPATCHER.IO es para una petision a la DB remota
         lang: String) : WeatherForecastEntity = withContext(Dispatchers.IO){
-            service.getWeatherForecastByCoordinates(lat, long, appId, units, lang)
+            service.getWeatherForecastByCoordinates(lat, lon, appId, units, lang)
     }
 }
 

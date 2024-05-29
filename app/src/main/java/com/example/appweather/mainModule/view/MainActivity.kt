@@ -26,20 +26,19 @@ class MainActivity : AppCompatActivity() {
 
         setupViewModel()
         setupObservers()
-
+/*
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
     }
 
     private fun setupViewModel() {
         val vm: MainViewModel by viewModels()
 
         binding.lifecycleOwner = this
-        binding.setVariable(BR.viewModel, vm) //vatiable de dataBinding conectado con activity_main.xml
-
+        binding.setVariable(BR.viewModel, vm) //variable de dataBinding conectado con activity_main.xml
     }
 
     private fun setupObservers() {
