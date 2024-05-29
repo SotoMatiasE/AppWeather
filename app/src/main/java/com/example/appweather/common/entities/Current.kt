@@ -1,4 +1,4 @@
-package com.example.appweather.common
+package com.example.appweather.common.entities
 
 data class Current(
     val dt: Long,
