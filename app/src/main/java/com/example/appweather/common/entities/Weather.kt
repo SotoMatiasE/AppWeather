@@ -1,3 +1,3 @@
 package com.example.appweather.common.entities
 
-data class Weather(val name: String, val description: String)
+data class Weather(val main: String, val description: String)
