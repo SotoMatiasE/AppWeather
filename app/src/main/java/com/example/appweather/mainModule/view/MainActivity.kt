@@ -4,20 +4,25 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appweather.BR
 import com.example.appweather.R
+import com.example.appweather.common.entities.Forecast
+import com.example.appweather.common.utils.CommonUtils
 import com.example.appweather.databinding.ActivityMainBinding
+import com.example.appweather.mainModule.view.adapters.ForecastAdapter
+import com.example.appweather.mainModule.view.adapters.OnClickListener
 import com.example.appweather.mainModule.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
+    //variable que ayuda con el adapter
+    private lateinit var adapter: ForecastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         setupViewModel()
         setupObservers()
+        //configurar adapter con el recyclerview
+        setupAdapter()
+        setupRecyclerView()
 /*
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }*/
     }
+
 
     private fun setupViewModel() {
         val vm: MainViewModel by viewModels()
@@ -46,6 +55,22 @@ class MainActivity : AppCompatActivity() {
             it.getSnackbarMessage().observe(this){resMsg -> //esto apunta al mensaje de error MainViewModel
                 Snackbar.make(binding.root, resMsg, Snackbar.LENGTH_LONG).show()
             }
+            //rellenar adapter
+            it.getResult().observe(this){result ->
+                adapter.submitList(result.hourly) //houerly viene de WeatherForecastEntity tiene una List
+            }
+        }
+    }
+
+    private fun setupAdapter() {
+        adapter = ForecastAdapter(this)
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = this@MainActivity.adapter
         }
     }
 
@@ -56,6 +81,12 @@ class MainActivity : AppCompatActivity() {
                                                 "90970b95ee4d5f526d63015fa67a6772",
                                                 "metric","es")
         }
+    }
+
+    //Metodo sobre escrito de OnClickListener
+    override fun onClick(forecast: Forecast) {
+        //ahora solo va a mostart un mensaje
+        Snackbar.make(binding.root, CommonUtils.getFullDate(forecast.dt), Snackbar.LENGTH_LONG).show()
     }
 }
 
